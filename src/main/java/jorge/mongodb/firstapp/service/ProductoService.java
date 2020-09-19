@@ -20,13 +20,13 @@ public class ProductoService {
     }
 
     public Producto postProducto(Producto producto) {
-        Producto prodto = productoRepository.save(producto);
-        for (Categoria categoria : prodto.getCategorias()) {
+        Producto productoGuardado = productoRepository.save(producto);
+        for (Categoria categoria : productoGuardado.getCategorias()) {
             List<Producto> productos = categoria.getProductos();
-            productos.add(prodto);
+            productos.add(productoGuardado);
             categoria.setProductos(productos);
             categoriaRepository.save(categoria);
         }
-        return prodto;
+        return productoGuardado;
     }
 }

@@ -25,18 +25,17 @@ public class FabricanteService {
     }
 
     public Fabricante postFabricante(FabricanteDto fabricante) {
-        Fabricante fabricanteNuevo = new Fabricante(fabricante);
-        fabricanteNuevo = fabricanteRepository.save(fabricanteNuevo);
+        Fabricante fabricanteGuardado = fabricanteRepository.save(new Fabricante(fabricante));
         if (fabricante.getDireccion() != null) {
             Direccion direccion = direccionRepository.save(fabricante.getDireccion());
-            fabricanteNuevo.setDireccionId(direccion.getId());
+            fabricanteGuardado.setDireccionId(direccion.getId());
         }
-        String fabricanteId = fabricanteNuevo.getId();
-        fabricanteNuevo.getProductos().forEach(e -> {
+        String fabricanteId = fabricanteGuardado.getId();
+        fabricanteGuardado.getProductos().forEach(e -> {
             e.setFabricanteId(fabricanteId);
             productoRepository.save(e);
         });
-        return fabricanteRepository.save(fabricanteNuevo);
+        return fabricanteRepository.save(fabricanteGuardado);
     }
 
     public void deleteFabricante(FabricanteDto fabricanteDto) {
@@ -47,6 +46,4 @@ public class FabricanteService {
             direccionRepository.deleteById(fabricante.getDireccionId());
         }
     }
-
-
 }
