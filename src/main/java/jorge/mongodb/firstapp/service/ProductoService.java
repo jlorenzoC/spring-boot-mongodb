@@ -23,7 +23,6 @@ public class ProductoService {
         Producto prodto = productoRepository.save(producto);
         for (Categoria categoria : prodto.getCategorias()) {
             List<Producto> productos = categoria.getProductos();
-//            Producto prod = new Producto(prodto);
             productos.add(prodto);
             categoria.setProductos(productos);
             categoriaRepository.save(categoria);
