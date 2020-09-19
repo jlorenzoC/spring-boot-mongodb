@@ -7,7 +7,7 @@ Las Colecciones MongoDB están referenciadas entre si de la siguiente manera:
 <div style="text-align: center; margin: 20px; width: 100%">
     <img style="width:500px" src="./src/main/resources/static/img/MongoDB.png" alt="modelo"> 
 </div>
-Donde los documentos están compuestos por las siguientes propiedades:
+Los cuales están compuestos por las siguientes propiedades:
 
 ```
 Fabricante: {
