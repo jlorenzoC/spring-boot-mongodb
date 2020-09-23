@@ -1,0 +1,39 @@
+= Documentación de la API REST del proyecto  https://github.com/jlorenzoC/spring-boot-mongodb[Spring Boot + MongoDB]
+:icons: font
+:toc: left
+:sectnums:
+:toclevels: 3
+
+== API del recurso Fabricante
+
+A cotinuación se brinda la información necesaria para la manipulación del recurso *Fabricante*
+
+=== ¿Cómo obtener todos los Fabricantes?
+
+==== Petición curl
+
+include::{snippets}/get-all-fabricantes/curl-request.adoc[]
+
+==== Petición http
+
+include::{snippets}/get-all-fabricantes/http-request.adoc[]
+
+==== Ejemplo de la respuesta http
+
+include::{snippets}/get-all-fabricantes/http-response.adoc[]
+
+==== Petición httpie
+
+include::{snippets}/get-all-fabricantes/httpie-request.adoc[]
+
+==== Cuerpo de la petición
+
+No tiene cuerpo de petición
+
+==== Ejemplo del cuerpo de la respuesta
+
+include::{snippets}/get-all-fabricantes/response-body.adoc[]
+
+==== Campos del cuerpo de la respuesta
+
+include::{snippets}/get-all-fabricantes/response-fields.adoc[]
