@@ -1,5 +1,7 @@
 # API REST con Spring Boot + MongoDB
 
+Visite documentación en vivo [aquí](https://jlorenzoc.github.io/spring-boot-mongodb/), hospedada por GitHub Pages.
+
 ## Modelo conceptual del negocio
 
 Las Colecciones MongoDB están referenciadas entre si de la siguiente manera:
