@@ -5,8 +5,6 @@ import jorge.mongodb.firstapp.dto.FabricanteDto;
 import jorge.mongodb.firstapp.repository.*;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class FabricanteService {
 
@@ -24,26 +22,43 @@ public class FabricanteService {
         this.productoRepository = productoRepository;
     }
 
-    public Fabricante postFabricante(FabricanteDto fabricante) {
-        Fabricante fabricanteGuardado = fabricanteRepository.save(new Fabricante(fabricante));
-        if (fabricante.getDireccion() != null) {
-            Direccion direccion = direccionRepository.save(fabricante.getDireccion());
-            fabricanteGuardado.setDireccionId(direccion.getId());
-        }
-        String fabricanteId = fabricanteGuardado.getId();
-        fabricanteGuardado.getProductos().forEach(e -> {
-            e.setFabricanteId(fabricanteId);
-            productoRepository.save(e);
+    public Fabricante postFabricante(FabricanteDto fabricanteDto) {
+        Fabricante fabricante = guardarFabricanteConSuDireccion(fabricanteDto);
+        asociarFabricanteASuListaDeProductos(fabricante);
+        return fabricante;
+    }
+
+    private Fabricante guardarFabricanteConSuDireccion(FabricanteDto fabricanteDto) {
+        return fabricanteRepository.save(new Fabricante(crearDireccionYAsociarselaAFabricante(fabricanteDto)));
+    }
+
+    private FabricanteDto crearDireccionYAsociarselaAFabricante(FabricanteDto fabricanteDto) {
+        Direccion direccionDto = fabricanteDto.getDireccion();
+        String direccionId = fabricanteDto.getDireccionId();
+        Direccion direccion = direccionRepository.findById(direccionId == null ? "" : direccionId)
+                .map(direccionEnBaseDeDatos -> actualizarDireccionSiSonDistintitas(direccionEnBaseDeDatos, direccionDto))
+                .orElse(direccionDto != null ? direccionRepository.save(direccionDto) : null);
+        if (direccion != null) fabricanteDto.setDireccionId(direccion.getId());
+        return fabricanteDto;
+    }
+
+    private Direccion actualizarDireccionSiSonDistintitas(Direccion d1, Direccion d2) {
+        if (!d1.equals(d2) && d2 != null) return direccionRepository.save(d2);
+        return d1;
+    }
+
+    private void asociarFabricanteASuListaDeProductos(Fabricante fabricante) {
+        fabricante.getProductos().forEach(producto -> {
+            producto.setFabricanteId(fabricante.getId());
+            productoRepository.save(producto);
         });
-        return fabricanteRepository.save(fabricanteGuardado);
     }
 
     public void deleteFabricante(FabricanteDto fabricanteDto) {
-        Optional<Fabricante> fabricanteOpt = fabricanteRepository.findById(fabricanteDto.getId());
-        if (fabricanteOpt.isPresent()) {
-            Fabricante fabricante = fabricanteOpt.get();
+        fabricanteRepository.findById(fabricanteDto.getId()).map(fabricante -> {
             fabricanteRepository.delete(fabricante);
             direccionRepository.deleteById(fabricante.getDireccionId());
-        }
+            return fabricante;
+        }).get();
     }
 }
