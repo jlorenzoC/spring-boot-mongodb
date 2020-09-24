@@ -43,7 +43,7 @@ class FabricanteControllerTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .apply(documentationConfiguration(restDocumentationContextProvider))
                 .build();
-       fabricanteFieldDescriptor = removeElementsFromArray(fabricanteFieldDescriptors, direccionFieldDescriptor);
+        fabricanteFieldDescriptor = removeElementsFromArray(fabricanteFieldDescriptors, direccionFieldDescriptor);
     }
 
     @Test
@@ -61,6 +61,8 @@ class FabricanteControllerTest {
 
     @Test
     void postFabricante() throws Exception {
+        fabricante.setId(null);
+        fabricante.getDireccion().setId(null);
         this.mockMvc.perform(post("/fabricante")
                 .content(objectMapper.writeValueAsString(fabricante))
                 .contentType(MediaType.APPLICATION_JSON))
