@@ -1,12 +1,49 @@
 = Documentación de la API REST del proyecto  https://github.com/jlorenzoC/spring-boot-mongodb[Spring Boot + MongoDB]
-:icons: font
+:author: Jorge Javier Lorenzo Columbié
+:revdate: 24-9-2020
+:revnumber: v0.2
 :toc: left
 :sectnums:
 :toclevels: 3
+:version-label:
 
 == API del recurso Fabricante
 
 A cotinuación se brinda la información necesaria para la manipulación del recurso *Fabricante*
+
+=== ¿Cómo publicar un nuevo Fabricante?
+
+==== Petición curl
+
+include::{snippets}/post-fabricante/curl-request.adoc[]
+
+==== Petición http
+
+include::{snippets}/post-fabricante/http-request.adoc[]
+
+==== Ejemplo de la respuesta http
+
+include::{snippets}/post-fabricante/response-body.adoc[]
+
+==== Petición httpie
+
+include::{snippets}/post-fabricante/httpie-request.adoc[]
+
+==== Cuerpo de la petición
+
+include::{snippets}/post-fabricante/request-body.adoc[]
+
+==== Ejemplo del cuerpo de la respuesta
+
+include::{snippets}/post-fabricante/response-body.adoc[]
+
+==== Campos del cuerpo de la petición
+
+include::{snippets}/post-fabricante/request-fields.adoc[]
+
+==== Campos del cuerpo de la respuesta
+
+include::{snippets}/post-fabricante/response-fields.adoc[]
 
 === ¿Cómo obtener todos los Fabricantes?
 
@@ -37,3 +74,4 @@ include::{snippets}/get-all-fabricantes/response-body.adoc[]
 ==== Campos del cuerpo de la respuesta
 
 include::{snippets}/get-all-fabricantes/response-fields.adoc[]
+

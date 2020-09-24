@@ -48,10 +48,12 @@ public class FabricanteService {
     }
 
     private void asociarFabricanteASuListaDeProductos(Fabricante fabricante) {
-        fabricante.getProductos().forEach(producto -> {
-            producto.setFabricanteId(fabricante.getId());
-            productoRepository.save(producto);
-        });
+        if (fabricante.getProductos() != null) {
+            fabricante.getProductos().forEach(producto -> {
+                producto.setFabricanteId(fabricante.getId());
+                productoRepository.save(producto);
+            });
+        }
     }
 
     public void deleteFabricante(FabricanteDto fabricanteDto) {

@@ -26,7 +26,7 @@ public class FabricanteController {
     }
 
     @PostMapping
-    private Fabricante post(@RequestBody FabricanteDto fabricante) {
+    public Fabricante post(@RequestBody FabricanteDto fabricante) {
         return fabricanteService.postFabricante(fabricante);
     }
 

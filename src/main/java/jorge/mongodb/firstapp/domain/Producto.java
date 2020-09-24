@@ -9,6 +9,7 @@ import java.util.*;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Document
 public class Producto {
     @Id
