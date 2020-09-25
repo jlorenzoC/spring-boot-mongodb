@@ -13,9 +13,6 @@ A cotinuación se brinda la información necesaria para la manipulación del rec
 
 === ¿Cómo publicar un nuevo Fabricante?
 
-Es contradictorio que en circunstancias reales un producto se cree sin su fabricante, pero en el mundo digital es posible, todo depende de la lógica y requisitos del negocio modelado.
-En este caso yéndose de la realidad un poco y para fines demostrativos, asumamos que existe esa contradicción.
-
 ==== Petición curl
 
 include::{snippets}/post-fabricante/curl-request.adoc[]

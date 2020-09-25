@@ -1,6 +1,7 @@
 package jorge.mongodb.firstapp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jorge.mongodb.firstapp.util.RecursosEstaticos;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 
 import static jorge.mongodb.firstapp.util.RecursosEstaticos.*;
+import static jorge.mongodb.firstapp.util.ToolBox.convertirASet;
 import static jorge.mongodb.firstapp.util.ToolBox.removeElementsFromArray;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -33,7 +35,7 @@ class FabricanteControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private List<FieldDescriptor> fabricanteFieldDescriptor;
+    private List<FieldDescriptor> fabricanteFieldsDescriptor;
 
     @BeforeEach
     void setUp(
@@ -43,35 +45,34 @@ class FabricanteControllerTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .apply(documentationConfiguration(restDocumentationContextProvider))
                 .build();
-        fabricanteFieldDescriptor = removeElementsFromArray(fabricanteFieldDescriptors, direccionFieldDescriptor);
+        fabricanteFieldsDescriptor = removeElementsFromArray(RecursosEstaticos.fabricanteFieldsDescriptor,
+                direccionFieldDescriptor);
     }
 
     @Test
     void getAllFabricantes() throws Exception {
-
-        this.mockMvc.perform(get("/fabricante"))
+        mockMvc.perform(get("/fabricante"))
                 .andExpect(status().isOk())
                 .andDo(document("{method-name}",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         responseFields(
                                 fieldWithPath("[]").description("Un arreglo de fabricantes").optional())
-                                .andWithPrefix("[].", fabricanteFieldDescriptor)));
+                                .andWithPrefix("[].", fabricanteFieldsDescriptor)));
     }
 
     @Test
     void postFabricante() throws Exception {
-        fabricante.setId(null);
-        fabricante.getDireccion().setId(null);
-        this.mockMvc.perform(post("/fabricante")
+        fabricanteFieldsDescriptor.removeAll(convertirASet(productoFieldDescriptor, categoriaFieldDescriptor));
+        mockMvc.perform(post("/fabricante")
                 .content(objectMapper.writeValueAsString(fabricante))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(document("{method-name}",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
-                        requestFields(fabricanteFieldDescriptors),
-                        responseFields(fabricanteFieldDescriptor)
+                        requestFields(RecursosEstaticos.fabricanteFieldsDescriptor),
+                        responseFields(fabricanteFieldsDescriptor)
                 ));
     }
 }

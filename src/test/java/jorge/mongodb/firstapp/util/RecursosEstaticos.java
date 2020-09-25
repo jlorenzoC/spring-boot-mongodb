@@ -7,43 +7,58 @@ import org.springframework.restdocs.payload.*;
 import java.util.List;
 import java.util.stream.*;
 
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static jorge.mongodb.firstapp.util.ToolBox.fieldDescriptor;
 
 public class RecursosEstaticos {
 
     public static final FieldDescriptor[] productoFieldDescriptor = new FieldDescriptor[]{
-            fieldWithPath("productos[]").description("Un arreglo de productos hechos por el fabricante").type(JsonFieldType.ARRAY).optional(),
-            fieldWithPath("productos[].id").description("El id de un producto hecho por el fabricante").type(JsonFieldType.STRING).optional(),
-            fieldWithPath("productos[].nombre").description("El nombre de un producto hecho por el fabricante").type(JsonFieldType.STRING).optional(),
-            fieldWithPath("productos[].fabricanteId").description("El id del fabricante del producto").type(JsonFieldType.STRING).optional()
+            fieldDescriptor("productos[]", "Un arreglo de productos hechos por el fabricante",
+                    JsonFieldType.ARRAY),
+            fieldDescriptor("productos[].id", "El id de un producto hecho por el fabricante",
+                    JsonFieldType.STRING),
+            fieldDescriptor("productos[].nombre", "El nombre de un producto hecho por el fabricante",
+                    JsonFieldType.STRING),
+            fieldDescriptor("productos[].fabricanteId", "El id del fabricante del producto",
+                    JsonFieldType.STRING)
     };
     public static final FieldDescriptor[] categoriaFieldDescriptor = new FieldDescriptor[]{
-            fieldWithPath("productos[].categorias[]").description("Un arreglo de categorias a las que pertenece el producto").type(JsonFieldType.ARRAY).optional(),
-            fieldWithPath("productos[].categorias[].id").description("El id de la categoría a la cual pertenece el producto").type(JsonFieldType.STRING).optional(),
-            fieldWithPath("productos[].categorias[].nombre").description("El nombre de la categoría a la cual pertenece el producto").type(JsonFieldType.STRING).optional()
+            fieldDescriptor("productos[].categorias[]", "Un arreglo de categorias a las que pertenece el " +
+                            "producto",
+                    JsonFieldType.ARRAY),
+            fieldDescriptor("productos[].categorias[].id", "El id de la categoría a la cual pertenece el producto",
+                    JsonFieldType.STRING),
+            fieldDescriptor("productos[].categorias[].nombre", "El nombre de la categoría a la cual pertenece el " +
+                    "producto", JsonFieldType.STRING)
     };
 
-    public static final FieldDescriptor[] fabricanteFieldDescriptor = new FieldDescriptor[]{
-            fieldWithPath("id").description("El id del fabricante").type(JsonFieldType.STRING).optional(),
-            fieldWithPath("nombre").description("El nombre del fabricante").type(JsonFieldType.STRING).optional(),
-            fieldWithPath("direccionId").description("El id de la dirección del fabricante").type(JsonFieldType.STRING).optional()
+    private static final FieldDescriptor[] fabricanteFieldDescriptor = new FieldDescriptor[]{
+            fieldDescriptor("id", "El id del fabricante", JsonFieldType.STRING),
+            fieldDescriptor("nombre", "El nombre del fabricante", JsonFieldType.STRING),
+            fieldDescriptor("direccionId", "El id de la dirección del fabricante", JsonFieldType.STRING),
+            fieldDescriptor("productos", "Un arreglo de productos hechos por el fabricante", JsonFieldType.ARRAY)
     };
 
     public static final FieldDescriptor[] direccionFieldDescriptor = new FieldDescriptor[]{
-            fieldWithPath("direccion.id").description("Id de la dirección del fabricante").type(JsonFieldType.STRING).optional(),
-            fieldWithPath("direccion.calle").description("Calle donde reside el fabricante").type(JsonFieldType.STRING).optional(),
-            fieldWithPath("direccion.numeroEstablecimiento").description("Número del establecimiento donde reside el fabricante").type(JsonFieldType.NUMBER).optional(),
-            fieldWithPath("direccion.entreCalles").description("Las dos primeras calles que interceptan perpendicularmente la calle principal del establecimiento del fabricante").type(JsonFieldType.STRING).optional(),
-            fieldWithPath("direccion.municipio").description("Municipio donde reside el fabricante").type(JsonFieldType.STRING).optional(),
-            fieldWithPath("direccion.estado").description("Estado donde reside el fabricante").type(JsonFieldType.STRING).optional(),
-            fieldWithPath("direccion.pais").description("País donde reside el fabricante").type(JsonFieldType.STRING).optional(),
-            fieldWithPath("direccion.zip").description("Código postal de la zona donde reside el fabricante").type(JsonFieldType.NUMBER).optional(),
+            fieldDescriptor("direccion.id", "Id de la dirección del fabricante", JsonFieldType.STRING),
+            fieldDescriptor("direccion.calle", "Calle donde reside el fabricante", JsonFieldType.STRING),
+            fieldDescriptor("direccion.numeroEstablecimiento", "Número del establecimiento donde reside el " +
+                    "fabricante", JsonFieldType.NUMBER),
+            fieldDescriptor("direccion.entreCalles", "Las dos primeras calles que interceptan perpendicularmente la " +
+                    "calle principal del establecimiento del fabricante", JsonFieldType.STRING),
+            fieldDescriptor("direccion.municipio", "Municipio donde reside el fabricante", JsonFieldType.STRING),
+            fieldDescriptor("direccion.estado", "Estado donde reside el fabricante", JsonFieldType.STRING),
+            fieldDescriptor("direccion.pais", "País donde reside el fabricante", JsonFieldType.STRING),
+            fieldDescriptor("direccion.zip", "Código postal de la zona donde reside el fabricante", JsonFieldType.NUMBER)
     };
 
-    static List<Categoria> categorias = Stream.of(new Categoria("5f6d1ba741585901f07db6f4", "electrodoméstico", null)).collect(Collectors.toList());
-    static List<Producto> productos = Stream.of(new Producto("5f6d1bc141585901f07db6f5", "mouse", categorias, null)).collect(Collectors.toList());
-    static Direccion direccion = new Direccion("5f6d1c155c01151b6706619f", "Peralta", 3, "Costa y Lorem", "Mayari", "Holguín", "Cuba", 106);
-    public static FabricanteDto fabricante = new FabricanteDto("5f6d1c155c01151b670661a0", "Emp. Guru", null, direccion, productos);
-
-    public static FieldDescriptor[] fabricanteFieldDescriptors = Stream.of(fabricanteFieldDescriptor, productoFieldDescriptor, categoriaFieldDescriptor, direccionFieldDescriptor).flatMap(Stream::of).toArray(FieldDescriptor[]::new);
+    static List<Categoria> categorias =
+            Stream.of(new Categoria(null, "electrodoméstico", null)).collect(Collectors.toList());
+    static List<Producto> productos =
+            Stream.of(new Producto(null, "mouse", null, null)).collect(Collectors.toList());
+    static Direccion direccion = new Direccion(null, "Peralta", 3, "Costa y Lorem", "Mayari",
+            "Holguín", "Cuba",
+            106);
+    public static FabricanteDto fabricante = new FabricanteDto(null, "Emp. Guru", null, direccion, null);
+    public static FieldDescriptor[] fabricanteFieldsDescriptor = Stream.of(fabricanteFieldDescriptor,
+            productoFieldDescriptor, categoriaFieldDescriptor, direccionFieldDescriptor).flatMap(Stream::of).toArray(FieldDescriptor[]::new);
 }
