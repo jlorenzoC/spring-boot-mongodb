@@ -18,4 +18,10 @@ public class Categoria {
     @JsonIgnoreProperties(value = "categorias", allowSetters = true)
     @DBRef(lazy = true)
     private List<Producto> productos;
+
+    public List<Producto> getProductos() {
+        if (productos == null)
+            return new ArrayList<>();
+        return productos;
+    }
 }
