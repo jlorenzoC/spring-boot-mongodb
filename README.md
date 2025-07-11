@@ -1,6 +1,6 @@
 # API REST con Spring Boot + MongoDB
 
-Visite documentación online [aquí](https://jlorenzoc.github.io/spring-boot-mongodb/), hospedada por GitHub Pages.
+Visite documentación [aquí](https://jlorenzoc.github.io/spring-boot-mongodb/), hospedada por GitHub Pages.
 
 ## Modelo conceptual del negocio
 
